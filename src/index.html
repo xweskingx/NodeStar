@@ -3,6 +3,23 @@
     <head>
         <meta charset="UTF-8" />
         <title></title>
+        <script type="text/javascript" src="http://localhost:8080/auth/js/keycloak.js"></script>
+        <style>
+
+        .lines:hover {
+            animation: draw 3.5s infinite;
+        }
+
+        .logo {
+            transform: scale(0.3);
+        }
+
+          @keyframes draw {
+              50% {
+                  stroke-dashoffset: 0;
+              }
+          }
+        </style>
     </head>
     <body>
         <form action="create_tb.php" method="get">
@@ -17,5 +34,8 @@
         <form action="show_tbs.php" method="get">
             <input type="submit"  value="Show Tables">
         </form>
+        <footer>
+            <script type="text/javascript" src="js/index.js"></script>
+        </footer>
     </body>
 </html>
