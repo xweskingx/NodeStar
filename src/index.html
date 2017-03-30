@@ -6,22 +6,44 @@
         <script type="text/javascript" src="http://localhost:8080/auth/js/keycloak.js"></script>
         <style>
 
-        .lines:hover {
-            animation: draw 3.5s infinite;
-        }
+.lines:hover {
+    animation: draw 3.5s infinite;
+}
 
         .logo {
             transform: scale(0.3);
         }
 
-          @keyframes draw {
-              50% {
-                  stroke-dashoffset: 0;
-              }
-          }
+        @keyframes draw {
+            50% {
+                stroke-dashoffset: 0;
+            }
+        }
         </style>
     </head>
     <body>
+        <svg height="210" width="500">
+            <defs>
+                <linearGradient id="gradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="rgb(0,0,255)"/>
+                    <stop offset="50%" stop-color="black" stop-opacity="0"/>
+                    <stop offset="100%" stop-color="rgb(255,255,0)" stop-opacity="1"/>
+                </linearGradient>
+            </defs>
+            <polygon points="100,10 40,198 190,78 10,78 160,198"
+                     style="stroke:black;stroke-width:2;fill-rule:nonzero;"
+                     stroke-dasharray="2,2" fill="url(#gradient)"/>
+            <circle cx="100" cy="10" r="6"/>
+            <circle cx="40" cy="198" r="6"/>
+            <circle cx="190" cy="78" r="6"/>
+            <circle cx="10" cy="78" r="6"/>
+            <circle cx="160" cy="198" r="6"/>
+            <circle cx="75" cy="78" r="6"/>
+            <circle cx="120" cy="78" r="6"/>
+            <circle cx="135" cy="125" r="6"/>
+            <circle cx="65" cy="125" r="6"/>
+            <circle cx="100" cy="150" r="6"/>
+        </svg>
         <form action="create_tb.php" method="get">
             Table Name: <input type="text" name="name">
             Table Params: <input type="text" name="params">

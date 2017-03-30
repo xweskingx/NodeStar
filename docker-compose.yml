@@ -4,7 +4,7 @@ services:
     web:
         depends_on:
             - php
-            - auth
+            # - auth
         restart: always
         image: nginx:latest
         ports:
@@ -18,7 +18,7 @@ services:
     php:
         depends_on:
             - db
-            - auth
+            # - auth
         restart: always
         build: .
         volumes:
@@ -39,6 +39,7 @@ services:
             MYSQL_PASSWORD: nodestar
         networks:
             - db-bridge
+            - auth-bridge
     auth:
         image: jboss/keycloak
         restart: always
@@ -49,7 +50,6 @@ services:
             KEYCLOAK_PASSWORD: abcd1234
         networks:
             - auth-bridge
-
 
 
 networks:
