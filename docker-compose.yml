@@ -1,5 +1,3 @@
-version: '2'
-
 services:
     web:
         depends_on:
@@ -40,16 +38,16 @@ services:
         networks:
             - db-bridge
             - auth-bridge
-    auth:
-        image: jboss/keycloak
-        restart: always
-        ports:
-            - "8080:8080"
-        environment:
-            KEYCLOAK_USER: root
-            KEYCLOAK_PASSWORD: abcd1234
-        networks:
-            - auth-bridge
+    # auth:
+    #     image: jboss/keycloak
+    #     restart: always
+    #     ports:
+    #         - "8080:8080"
+    #     environment:
+    #         KEYCLOAK_USER: root
+    #         KEYCLOAK_PASSWORD: abcd1234
+    #     networks:
+    #         - auth-bridge
 
 
 networks:
