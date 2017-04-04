@@ -1,0 +1,8 @@
+{
+    "require-dev": {
+        "giorgiosironi/eris": "dev-master",
+        "phpunit/phpunit": "^6.0",
+        "phpunit/dbunit": "^3.0",
+        "stevenmaguire/oauth2-keycloak": "^2.0"
+    }
+}

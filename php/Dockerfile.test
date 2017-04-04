@@ -1,0 +1,10 @@
+FROM nubs/composer-build:latest
+
+ADD ./src /src
+ADD ./tests /tests
+
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
+RUN composer global require phpunit/phpunit:*
+
+CMD ["phpunit", "/tests/"]
