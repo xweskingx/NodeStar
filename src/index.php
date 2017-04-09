@@ -5,8 +5,10 @@
  * @Author Mark Boger
  * @Author Wesley King
  */
-
 require __DIR__ . '/vendor/autoload.php';
+require_once('NodeStar/DBConnector.php');
+
+use NodeStar\DB\Connector;
 
 $provider = new Stevenmaguire\OAuth2\Client\Provider\Keycloak([
     'authServerUrl'         => 'http://' . $_SERVER[HTTP_HOST] . ':8080/auth',
@@ -59,6 +61,17 @@ if (!isset($_GET['code'])) {
 
     // Use this to interact with an API on the users behalf
     echo $token->getToken();
+
+    $c = new Connector('db', 'nodestar', 'nodestar', 'nodestar', 'nodestar');
+
+    $c->create();
+
+    $hmm = $c->get_node("fasd");
+    $heh = $c->list_nodes();
+
+    echo $heh;
+    echo "<br/>";
+    echo $hmm;
 }
 
 ?>

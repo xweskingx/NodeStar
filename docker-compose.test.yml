@@ -1,31 +1,30 @@
 version: '2'
 
 services:
-  php:
-    depends_on:
-      - db
-    build:
-      dockerfile: php/Dockerfile.test
-      context: .
-    networks:
-      db-bridge:
-        aliases:
-          - php
-  db:
-    image: mysql:latest
-    volumes:
-      - ./data:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: nodestar
-      MYSQL_DATABASE: nodestar
-      MYSQL_USER: nodestar
-      MYSQL_PASSWORD: nodestar
-    networks:
-      db-bridge:
-        aliases:
-          - db
-
+    php:
+        depends_on:
+            - db
+        build:
+            context: .
+            dockerfile: Dockerfile.test
+        volumes:
+            - ./src:/app/src
+            - ./tests:/app/tests
+        command: phpunit /app/tests/
+        networks:
+            - db-bridge
+    db:
+        image: mysql
+        volumes:
+            - ./tests/db:/var/lib/mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: unit
+            MYSQL_DATABASE: unit
+            MYSQL_USER: unit
+            MYSQL_PASSWORD: unit
+        networks:
+            - db-bridge
 networks:
   db-bridge:
     driver: bridge
