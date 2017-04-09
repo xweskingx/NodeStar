@@ -23,6 +23,7 @@ services:
         build: .
         volumes:
             - ./src:/src
+            - ./templates:/templates
         networks:
             - server-bridge
             - db-bridge

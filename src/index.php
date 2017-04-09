@@ -6,17 +6,20 @@
  * @Author Mark Boger
  */
 require_once('NodeStar/DBConnector.php');
+require_once('NodeStar/SchemaGen.php');
 
 use NodeStar\DB\Connector;
+use NodeStar\Schema\SchemaGen;
 
+//
 $c = new Connector('db', 'nodestar', 'nodestar', 'nodestar', 'nodestar');
 
+$s = new SchemaGen($c);
+$c->delete();
 $c->create();
 
-$hmm = $c->get_node("fasd");
-$heh = $c->list_nodes();
+$c->place_node('huh', '/templates/test.py');
+echo $c->list_nodes();
+echo $c->get_node('huh');
 
-echo $heh;
-echo "<br/>";
-echo $hmm;
 ?>
