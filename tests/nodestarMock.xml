@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<dataset>
+    <table name="nodes">
+        <column>id</column>
+        <column>name</column>
+        <row>
+            <value>1</value>
+            <value>dense</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>cnn</value>
+        </row>
+        <row>
+            <value>3</value>
+            <value>rnn</value>
+        </row>
+    </table>
+</dataset>

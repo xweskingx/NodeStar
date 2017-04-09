@@ -8,23 +8,23 @@ services:
             context: .
             dockerfile: Dockerfile.test
         volumes:
-            - ./src:/src
-            - ./tests:/tests
+            - ./src:/app/src
+            - ./tests:/app/tests
+        command: phpunit /app/tests/
         networks:
             - db-bridge
     db:
-        image: mysql:latest
+        image: mysql
         volumes:
-            - ./data:/var/lib/mysql
+            - ./tests/db:/var/lib/mysql
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: nodestar
-            MYSQL_DATABASE: nodestar
-            MYSQL_USER: nodestar
-            MYSQL_PASSWORD: nodestar
+            MYSQL_ROOT_PASSWORD: unit
+            MYSQL_DATABASE: unit
+            MYSQL_USER: unit
+            MYSQL_PASSWORD: unit
         networks:
             - db-bridge
-
 networks:
     db-bridge:
         driver: bridge
