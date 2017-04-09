@@ -1,63 +1,82 @@
 version: '2'
 
 services:
-    web:
-        depends_on:
-            - php
-            # - auth
-        restart: always
-        image: nginx:latest
-        ports:
-            - "8888:80"
-        volumes:
-            - ./src:/src
-            - ./utils/site.conf:/etc/nginx/conf.d/default.conf
-        networks:
-            - server-bridge
-            - auth-bridge
-    php:
-        depends_on:
-            - db
-            # - auth
-        restart: always
-        build: .
-        volumes:
-            - ./src:/src
-        networks:
-            - server-bridge
-            - db-bridge
-            - auth-bridge
-    db:
-        image: mysql:latest
-        volumes:
-            - ./data:/var/lib/mysql
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: nodestar
-            MYSQL_DATABASE: nodestar
-            MYSQL_USER: nodestar
-            MYSQL_PASSWORD: nodestar
-        networks:
-            - db-bridge
-            - auth-bridge
-    # auth:
-    #     image: jboss/keycloak
-    #     restart: always
-    #     ports:
-    #         - "8080:8080"
-    #     environment:
-    #         KEYCLOAK_USER: root
-    #         KEYCLOAK_PASSWORD: abcd1234
-    #     networks:
-    #         - auth-bridge
-
+  web:
+    depends_on:
+      - php
+      - auth
+    restart: always
+    image: nginx:latest
+    build:
+      dockerfile: web/Dockerfile
+      context: .
+    ports:
+      - "80:80"
+    networks:
+      server-bridge:
+        aliases:
+          - web
+      auth-bridge:
+        aliases:
+          - web
+  php:
+    depends_on:
+      - db
+      - auth
+    restart: always
+    build:
+      dockerfile: php/Dockerfile
+      context: .
+    networks:
+      server-bridge:
+        aliases:
+          - php
+      db-bridge:
+        aliases:
+          - php
+  db:
+    image: mysql:latest
+    volumes:
+      - ./data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: nodestar
+      MYSQL_DATABASE: nodestar
+      MYSQL_USER: nodestar
+      MYSQL_PASSWORD: nodestar
+    networks:
+      db-bridge:
+        aliases:
+          - db
+  auth:
+    image: jboss/keycloak-mysql
+    build:
+      dockerfile: keycloak/Dockerfile
+      context: .
+    links:
+      - db:mysql
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_USER: root
+      KEYCLOAK_PASSWORD: abcd1234
+      MYSQL_DATABASE: nodestar
+      MYSQL_USERNAME: nodestar
+      MYSQL_PASSWORD: nodestar
+      MYSQL_PORT_3306_TCP_ADDR: mysql
+      MYSQL_PORT_3306_TCP_PORT: 3306
+    networks:
+      auth-bridge:
+        aliases:
+          - keycloak
+      db-bridge:
+        aliases:
+          - keycloak
 
 networks:
-    server-bridge:
-        driver: bridge
-
-    db-bridge:
-        driver: bridge
-
-    auth-bridge:
-        driver: bridge
+  server-bridge:
+    driver: bridge
+  db-bridge:
+    driver: bridge
+  auth-bridge:
+    driver: bridge
