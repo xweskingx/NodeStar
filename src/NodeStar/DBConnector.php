@@ -46,37 +46,56 @@ class Connector {
         $this->db_table = $db_table;
     }
 
+    // TODO Get rid of this
     public function create() {
         $this->con_do("create table if not exists {$this->db_table}" .
-            " (name varchar(20), id int primary key not null auto_increment)");
+            " (name varchar(20), " .
+            " file_path varchar(100))");
     }
 
+    // TODO Get rid of this
     public function delete() {
         $this->con_do("drop table {$this->db_table}");
     }
 
-    public function place_node($params) {
-        $this->con_do("insert into {$this->db_table} (name) values ('{$params}')");
-    }
+    public function place_node(String ...$params) {
+        $temp_arr = [];
 
-    private function name_op($sql) {
-        $q_res = $this->con_do($sql);
-        $r_str = '';
-
-        while($node = $q_res->fetch_assoc()) {
-            $r_str .= $node["name"] . " ";
+        foreach ($params as $param) {
+            // Need to place single quotes arround everything
+            array_push($temp_arr, "'{$param}'");
         }
 
-        return $r_str;
+        $param_str = implode(', ', $temp_arr);
+
+        $this->con_do("insert into {$this->db_table} (name, file_path)" .
+            " values ({$param_str})");
     }
 
     public function list_nodes() {
-        return $this->name_op("select name from {$this->db_name}");
+        $q_res = $this->con_do("select name from {$this->db_name}");
+        $r_arr = [];
+
+        while($node = $q_res->fetch_assoc()) {
+            array_push($r_arr, $node["name"]);
+        }
+
+        return $r_arr;
     }
 
     public function get_node($node_name) {
-        return $this->name_op("select * from {$this->db_name}".
-            " where name='{$node_name}'");
+        $q_res = $this->con_do("select * from {$this->db_name}".
+            " where name='{$node_name}'")->fetch_assoc();
+
+        $f_path = $q_res["file_path"];
+
+        $file = fopen($f_path, "r");
+
+        $template = fread($file, filesize($f_path));
+
+        fclose($file);
+
+        return $template;
     }
 
     function __invoke($node_name) {

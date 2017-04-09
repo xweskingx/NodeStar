@@ -7,8 +7,10 @@
  */
 require __DIR__ . '/vendor/autoload.php';
 require_once('NodeStar/DBConnector.php');
+require_once('NodeStar/SchemaGen.php');
 
 use NodeStar\DB\Connector;
+use NodeStar\Schema\SchemaGen;
 
 $provider = new Stevenmaguire\OAuth2\Client\Provider\Keycloak([
     'authServerUrl'         => 'http://' . $_SERVER[HTTP_HOST] . ':8080/auth',
@@ -19,6 +21,7 @@ $provider = new Stevenmaguire\OAuth2\Client\Provider\Keycloak([
 ]);
 
 if (!isset($_GET['code'])) {
+
 
     // If we don't have an authorization code then get one
     $authUrl = $provider->getAuthorizationUrl();
@@ -62,16 +65,18 @@ if (!isset($_GET['code'])) {
     // Use this to interact with an API on the users behalf
     echo $token->getToken();
 
-    $c = new Connector('db', 'nodestar', 'nodestar', 'nodestar', 'nodestar');
 
+    $c = new Connector('db', 'nodestar', 'nodestar', 'nodestar', 'nodestar');
+    $s = new SchemaGen($c);
     $c->create();
 
-    $hmm = $c->get_node("fasd");
-    $heh = $c->list_nodes();
+    $c->place_node('mnist', '/templates/mnist.py');
+    $c->place_node('softmax', '/templates/softmax.py');
+    $c->place_node('dense', '/templates/dense.py');
+    $c->place_node('output', '/templates/output.py');
 
-    echo $heh;
-    echo "<br/>";
-    echo $hmm;
+
+    echo $s->make_network('{ "network" : ["mnist", "dense", "softmax", "output"]}');
 }
 
 ?>
