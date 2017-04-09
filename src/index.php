@@ -18,8 +18,10 @@ $s = new SchemaGen($c);
 $c->delete();
 $c->create();
 
-$c->place_node('huh', '/templates/test.py');
-echo $c->list_nodes();
-echo $c->get_node('huh');
+$c->place_node('mnist', '/templates/mnist.py');
+$c->place_node('softmax', '/templates/softmax.py');
+$c->place_node('dense', '/templates/dense.py');
+$c->place_node('output', '/templates/output.py');
 
+echo $s->make_network('{ "network" : ["mnist", "dense", "softmax", "output"]}');
 ?>

@@ -46,12 +46,14 @@ class Connector {
         $this->db_table = $db_table;
     }
 
+    // TODO Get rid of this
     public function create() {
         $this->con_do("create table if not exists {$this->db_table}" .
             " (name varchar(20), " .
             " file_path varchar(100))");
     }
 
+    // TODO Get rid of this
     public function delete() {
         $this->con_do("drop table {$this->db_table}");
     }
@@ -72,13 +74,13 @@ class Connector {
 
     public function list_nodes() {
         $q_res = $this->con_do("select name from {$this->db_name}");
-        $r_str = '';
+        $r_arr = [];
 
         while($node = $q_res->fetch_assoc()) {
-            $r_str .= $node["name"] . " ";
+            array_push($r_arr, $node["name"]);
         }
 
-        return $r_str;
+        return $r_arr;
     }
 
     public function get_node($node_name) {

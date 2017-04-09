@@ -12,6 +12,21 @@ class SchemaGen {
     }
 
     public function make_network($json) {
+        $decoded = json_decode($json);
+        $all     = '';
+
+        foreach($decoded->network as $layer) {
+            $all .= $this->conn->get_node($layer);
+        }
+
+        return $all;
+    }
+
+    public function get_nodes() {
+        return json_encode($this->conn->list_nodes());
+    }
+
+    public function add_node() {
 
     }
 }
