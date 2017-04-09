@@ -11,7 +11,7 @@ services:
       dockerfile: web/Dockerfile
       context: .
     ports:
-      - "8888:80"
+      - "80:80"
     networks:
       server-bridge:
         aliases:
