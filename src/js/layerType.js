@@ -3,6 +3,7 @@ function LayerType(libData){
     this.default_in = libData["default_in"];
     this.default_out = libData["default_out"];
     this.data_type = libData["data_type"];
+    this.layerData = "";
 }
 
 LayerType.prototype.toFlowchartData = function(){
@@ -27,16 +28,18 @@ LayerType.prototype.toFlowchartData = function(){
     }
     props.inputs = inputs;
     props.outputs = outputs;
-    
+    this.layerData = data;
     return data;
     
 }
 
-LayerType.prototype.appendToLibary = function(lib, id){
+LayerType.prototype.appendToLibary = function(lib, id, idn){
     var lib = $('#'+lib);
-  var location = lib.append('<li class="list-group-item liblist"><div class="libflow" id='+id+'></div></li>');
+  var location = lib.append('<li class="list-group-item liblist"><div class="libflow" id='+id+'></div>'+
+  '<button class="libButton" id="al'+idn+'">Add Layer</button></li>');
   
   var layerData = this.toFlowchartData();
+  
   
   //This code sets up a default flowchart operator to represent the
   //layer
@@ -92,5 +95,7 @@ LayerType.prototype.appendToLibary = function(lib, id){
   }
   
 });
+
+
     
 }

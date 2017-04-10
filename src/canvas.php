@@ -58,13 +58,16 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="jquery_flowchart/jquery.flowchart.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/canvas.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/loadLibrary.js"></script>
+    <script src="js/canvas.js"></script>
     
     <script>
-        $(document).ready(function(){loadLibrary("libraryList");});
+        $(document).ready(function(){loadLibrary("libraryList");
+            initCanvas();
+          
+        });
     </script>
 </body>
 

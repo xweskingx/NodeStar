@@ -19,10 +19,15 @@
 }
 
 .liblist{
-  height:200px;
+  height:230px;
 }
 .libflow{
-  height:200px;
+  height:160px;
+}
+
+.libButton{
+  height:50px;
+  width:50px;
 }
 
 
