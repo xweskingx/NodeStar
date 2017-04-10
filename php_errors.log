@@ -4,3 +4,9 @@
 [10-Apr-2017 03:38:59 UTC] PHP Fatal error:  require(): Failed opening required '/home/ubuntu/workspace/NS3/NodeStar/src/vendor/autoload.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/NS3/NodeStar/src/index.php on line 8
 [10-Apr-2017 03:38:59 UTC] PHP Stack trace:
 [10-Apr-2017 03:38:59 UTC] PHP   1. {main}() /home/ubuntu/workspace/NS3/NodeStar/src/index.php:0
+[10-Apr-2017 03:40:23 UTC] PHP Warning:  require(/home/ubuntu/workspace/NS3/NodeStar/src/vendor/autoload.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/NS3/NodeStar/src/index.php on line 8
+[10-Apr-2017 03:40:23 UTC] PHP Stack trace:
+[10-Apr-2017 03:40:23 UTC] PHP   1. {main}() /home/ubuntu/workspace/NS3/NodeStar/src/index.php:0
+[10-Apr-2017 03:40:23 UTC] PHP Fatal error:  require(): Failed opening required '/home/ubuntu/workspace/NS3/NodeStar/src/vendor/autoload.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/NS3/NodeStar/src/index.php on line 8
+[10-Apr-2017 03:40:23 UTC] PHP Stack trace:
+[10-Apr-2017 03:40:23 UTC] PHP   1. {main}() /home/ubuntu/workspace/NS3/NodeStar/src/index.php:0
