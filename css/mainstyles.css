@@ -1,0 +1,31 @@
+.library {
+  float:left;
+  width: 20%;
+}
+.tab-pane{
+  height:500px;
+  overflow-y:scroll;
+  width:100%;
+}
+
+.canvas {
+  float:left;
+  width:80%;
+  height:1500px;
+}
+
+.canvasHolder{
+  height: 1500px;
+}
+
+.liblist{
+  height:200px;
+}
+.libflow{
+  height:200px;
+}
+
+
+
+
+
