@@ -51,7 +51,10 @@
             </ul>
             </div>
         </div>
-          <div class="canvas well" id="canvasHolder"></div>
+           <button class="canvasDel" id="delbutton">Delete Selection</button>
+          <div class="canvas well" id="canvasHolder">
+           
+          </div>
        
     </div>
     <script src="js/jquery.min.js"></script>

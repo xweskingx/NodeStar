@@ -28,9 +28,9 @@ function initAdditions(){
         idc++;
         
         button.onclick = function(){
-            console.log(layer.toFlowchartData());
+          
            var data = layer.toFlowchartData();
-            console.log(data);
+      
             $('#canvasHolder').flowchart('createOperator',operatorID, data["operators"]["operator1"]);
         };
      
