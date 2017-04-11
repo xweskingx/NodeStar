@@ -14,4 +14,3 @@ ADD ./src /src
 ADD ./templates /templates
 
 RUN cd /src && composer install --no-interaction
-

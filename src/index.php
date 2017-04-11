@@ -1,82 +1,77 @@
-<?php
-/*
- * Landing page and initial authentication redirect.
- *
- * @Author Mark Boger
- * @Author Wesley King
- */
-require __DIR__ . '/vendor/autoload.php';
-require_once('NodeStar/DBConnector.php');
-require_once('NodeStar/SchemaGen.php');
+<!DOCTYPE html>
+<html>
 
-use NodeStar\DB\Connector;
-use NodeStar\Schema\SchemaGen;
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeStar</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/Navigation-Clean1.css">
+    <link rel="stylesheet" href="css/mainstyles.css">
+    <link href="jquery_flowchart/jquery.flowchart.css" rel="stylesheet">
+</head>
 
-$provider = new Stevenmaguire\OAuth2\Client\Provider\Keycloak([
-    'authServerUrl'         => 'http://' . $_SERVER[HTTP_HOST] . ':8080/auth',
-    'realm'                 => 'NodeStar',
-    'clientId'              => 'NodeStar',
-    'clientSecret'          => '14df1a2c-ba38-4201-862b-44c3215feff3',
-    'redirectUri'           => 'http://' . $_SERVER[HTTP_HOST],
-]);
+<body>
+    <div style="background-color:rgba(109,49,49,0);">
+        <nav class="navbar navbar-default navbar-fixed-top navigation-clean" style="background-color:rgb(33,29,59);">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand navbar-link" href="#" style="background-color:rgba(244,244,244,0);background-size:auto;height:100px;"> <img src="img/NS.png">Nodestar</a>
+                    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                </div>
+                <div class="collapse navbar-collapse" id="navcol-1">
+                    <ul class="nav navbar-nav navbar-right" style="margin-top:30px;">
+                        <li class="dropdown" style="height:50px;"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Schema<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li id="schema-down" role="presentation"><a href="#" onclick="get_schema();">Download Schema</a></li>
+                                <li class="divider" role="presentation"></li>
+                                <li role="presentation"><a href="#">Save Schema</a></li>
+                                <li role="presentation"><a href="#">Load Schema</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a href="#">Account Details</a></li>
+                                <li role="presentation"><a href="#">Logout </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="navbar-text"></p>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div style="margin-top:125px;">
+        <div class="library panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Layer Library</h3></div>
+            <div class="tab-pane">
+            <ul class="list-group" id="libraryList">
 
-if (!isset($_GET['code'])) {
+            </ul>
+            </div>
+        </div>
+           <button class="canvasDel" id="delbutton">Delete Selection</button>
+          <div class="canvas well" id="canvasHolder">
 
+          </div>
 
-    // If we don't have an authorization code then get one
-    $authUrl = $provider->getAuthorizationUrl();
-    $_SESSION['oauth2state'] = $provider->getState();
-    header('Location: '.$authUrl);
-    exit;
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="jquery_flowchart/jquery.flowchart.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/layerType.js"></script>
+    <script src="js/layer.js"></script>
+    <script src="js/loadLibrary.js"></script>
+    <script src="js/canvas.js"></script>
 
+    <script>
+        $(document).ready(function(){loadLibrary("libraryList");
+            initCanvas();
 
-/*
- * Breaks authentication
-// Check given state against previously stored one to mitigate CSRF attack
- } elseif (empty($_GET['state']) || ($_GET['state'] !== $_SESSION['oauth2state'])) {
+        });
+    </script>
+</body>
 
-    unset($_SESSION['oauth2state']);
-    exit('Invalid state, make sure HTTP sessions are enabled.');
- */
-} else {
-
-    // Try to get an access token (using the authorization coe grant)
-    try {
-        $token = $provider->getAccessToken('authorization_code', [
-            'code' => $_GET['code']
-        ]);
-    } catch (Exception $e) {
-        exit('Failed to get access token: '.$e->getMessage());
-    }
-
-    // Optional: Now you have a token you can look up a users profile data
-    try {
-
-        // We got an access token, let's now get the user's details
-        $user = $provider->getResourceOwner($token);
-
-        // Use these details to create a new profile
-        printf('Hello %s!', $user->getName());
-
-    } catch (Exception $e) {
-        exit('Failed to get resource owner: '.$e->getMessage());
-    }
-
-    // Use this to interact with an API on the users behalf
-    echo $token->getToken();
-
-
-    $c = new Connector('db', 'nodestar', 'nodestar', 'nodestar', 'nodestar');
-    $s = new SchemaGen($c);
-    $c->create();
-
-    $c->place_node('mnist', '/templates/mnist.py');
-    $c->place_node('softmax', '/templates/softmax.py');
-    $c->place_node('dense', '/templates/dense.py');
-    $c->place_node('output', '/templates/output.py');
-
-
-    echo $s->make_network('{ "network" : ["mnist", "dense", "softmax", "output"]}');
-}
-
-?>
+</html>

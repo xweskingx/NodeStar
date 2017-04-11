@@ -7,7 +7,7 @@ function LayerType(libData){
 }
 
 LayerType.prototype.toFlowchartData = function(){
-    
+
     var data = new Object();
     data.operators = new Object();
     data.operators.operator1 = new Object();
@@ -30,17 +30,17 @@ LayerType.prototype.toFlowchartData = function(){
     props.outputs = outputs;
     this.layerData = data;
     return data;
-    
+
 }
 
 LayerType.prototype.appendToLibary = function(lib, id, idn){
     var lib = $('#'+lib);
   var location = lib.append('<li class="list-group-item liblist"><div class="libflow" id='+id+'></div>'+
   '<button class="libButton" id="al'+idn+'">Add Layer</button></li>');
-  
+
   var layerData = this.toFlowchartData();
-  
-  
+
+
   //This code sets up a default flowchart operator to represent the
   //layer
   //TO-DO Abstract out flowchart settings maybe?
@@ -93,9 +93,9 @@ LayerType.prototype.appendToLibary = function(lib, id, idn){
   onAfterChange: function (changeType) {
 
   }
-  
+
 });
 
 
-    
+
 }
