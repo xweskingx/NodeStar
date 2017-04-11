@@ -1,5 +1,6 @@
 var layerTypes = [];
 
+
 var idc = 0;
 
 function loadLibrary(libraryID){
@@ -17,18 +18,20 @@ function loadLibrary(libraryID){
     });
 }
 
+function getIDC(){
+    var temp = idc;
+    idc++;
+    return temp;
+}
 function initAdditions(){
 
     document.querySelectorAll('.libButton').forEach(function(button){
         var index = button.id.match(/\d+/)[0];
         var layer = layerTypes[index];
-        var operatorID = layer.layer_type + "" + idc;
-        idc++;
-
         button.onclick = function(){
-
+            var operatorID = layer.layer_type + "" + getIDC();
             var data = layer.toFlowchartData();
-
+            currentLayers.push(new Layer(layer.layer_type, operatorID));
             $('#canvasHolder').flowchart('createOperator',operatorID, data["operators"]["operator1"]);
         };
 
@@ -38,8 +41,9 @@ function initAdditions(){
 
 }
 
-function get_schema() {
-    layer_json = {
+
+function generateMiddlewareJSON(){
+     var oldlayer_json = {
         network : [
             // The mnist layer isn't an actual layer just loads data
             "mnist",
@@ -47,7 +51,24 @@ function get_schema() {
             "softmax",
             "output"
         ]
+    };  //This was left for a template 
+    
+    var data = $('#canvasHolder').flowchart('getData');
+    var operators = data['operators'];
+    console.log(operators);
+    var ids = Object.keys(operators);
+    var network = [];
+    for(var i = 0; i < ids.length; i++){
+        var layer = fetchProperLayer(ids[i]);
+        network.push(layer.name);
     }
+    console.log(ids);
+    var layer_json = {};
+    layer_json.network = network;
+    return layer_json;
+}
+function get_schema() {
+   var layer_json = generateMiddlewareJSON();
 
     $.ajax({
         type: 'post',
