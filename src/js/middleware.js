@@ -55,14 +55,12 @@ function generateMiddlewareJSON(){
     
     var data = $('#canvasHolder').flowchart('getData');
     var operators = data['operators'];
-    console.log(operators);
     var ids = Object.keys(operators);
     var network = [];
     for(var i = 0; i < ids.length; i++){
         var layer = fetchProperLayer(ids[i]);
         network.push(layer.name);
     }
-    console.log(ids);
     var layer_json = {};
     layer_json.network = network;
     return layer_json;
@@ -75,8 +73,8 @@ function get_schema() {
         url:'NodeStar/Middleware.php',
         data: layer_json,
         complete: function (response) {
-            $('#output').html(response.responseText);
-            console.log(response);
+            var blob = new Blob([response.responseText], {type: "text/plain;charset=utf-8"});
+            saveAs(blob, "schema.py");
         },
         error: function () {
             $('#output').html('Bummer: there was an error!');
@@ -84,3 +82,11 @@ function get_schema() {
     });
     return false;
 }
+
+$('#adButton').click(function(){
+    console.log("Wes, add the account linking here");
+});
+
+$('#logButton').click(function(){
+    console.log("Wes, logout here");
+});

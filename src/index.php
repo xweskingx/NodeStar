@@ -31,8 +31,8 @@
                         </li>
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li role="presentation"><a href="#">Account Details</a></li>
-                                <li role="presentation"><a href="#">Logout </a></li>
+                                <li role="presentation"><a href="#" id="adButton">Account Details</a></li>
+                                <li role="presentation"><a href="#" id="logButton">Logout </a></li>
                             </ul>
                         </li>
                     </ul>
@@ -59,11 +59,12 @@
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
+    <script src="file_saver/FileSaver.min.js"></script>
     <script src="jquery_flowchart/jquery.flowchart.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
-    <script src="js/loadLibrary.js"></script>
+    <script src="js/middleware.js"></script>
     <script src="js/canvas.js"></script>
 
     <script>
