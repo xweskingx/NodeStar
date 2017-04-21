@@ -59,7 +59,9 @@ function generateMiddlewareJSON(){
     var network = [];
     for(var i = 0; i < ids.length; i++){
         var layer = fetchProperLayer(ids[i]);
-        network.push(layer.name);
+        if(layer != null)
+            network.push(layer.name);
+        
     }
     var layer_json = {};
     layer_json.network = network;
@@ -68,19 +70,62 @@ function generateMiddlewareJSON(){
 function get_schema() {
    var layer_json = generateMiddlewareJSON();
 
+  var schemaName = getSchemaName();
+  if(schemaName != null){
     $.ajax({
         type: 'post',
         url:'NodeStar/Middleware.php',
         data: layer_json,
         complete: function (response) {
             var blob = new Blob([response.responseText], {type: "text/plain;charset=utf-8"});
-            saveAs(blob, "schema.py");
+            saveAs(blob, schemaName);
         },
         error: function () {
             $('#output').html('Bummer: there was an error!');
         }
     });
+  }
     return false;
+}
+
+function getSchemaName(){
+    var name = $('#schemaNameBox').val().trim();
+    if(name == ""){
+        new Noty({
+         text: 'Please name your schema before downloading',
+         layout: 'topCenter',
+         type: 'information',
+         theme:'mint'
+        }).show();
+        return null;   
+    }
+    return name + ".py";
+    
+}
+
+function makeData(layer_type,ind,outd,left, top){
+     var data = new Object();
+    data.operators = new Object();
+    data.operators.operator1 = new Object();
+    data.operators.operator1.top = top;
+    data.operators.operator1.left = left;
+    data.operators.operator1.properties = new Object();
+    var props = data.operators.operator1.properties;
+    props.title = layer_type;
+    var inputs = new Object();
+    var outputs = new Object();
+    for(var i = 0; i < ind; i++){
+        var label = "input_"+(i+1);
+        inputs[label]={'label':'Input ' + i};
+    }
+    for(var k = 0; k < outd; k++){
+        var label = "output_"+(k+1);
+        outputs[label]={'label':'Output ' + k};
+    }
+    props.inputs = inputs;
+    props.outputs = outputs;
+    this.layerData = data;
+    return data;
 }
 
 $('#adButton').click(function(){

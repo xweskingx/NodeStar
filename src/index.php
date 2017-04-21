@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/Navigation-Clean1.css">
     <link rel="stylesheet" href="css/mainstyles.css">
     <link href="jquery_flowchart/jquery.flowchart.css" rel="stylesheet">
+    <link href="noty/noty.css" rel="stylesheet">
 </head>
 
 <body>
@@ -53,7 +54,10 @@
             </ul>
             </div>
         </div>
-           <button class="canvasDel" id="delbutton">Delete Selection</button>
+           <div class="canvasTopBar">
+               Schema Name: <input type="text" id="schemaNameBox">
+               <button class="canvasDel" id="delbutton">Delete Selection</button>
+            </div>
           <div class="canvas well" id="canvasHolder">
 
           </div>
@@ -62,16 +66,20 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="file_saver/FileSaver.min.js"></script>
-    <script src="jquery_flowchart/jquery.flowchart.min.js"></script>
+    <script src="jquery_flowchart/jquery.flowchart.js"></script>
+    <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/middleware.js"></script>
     <script src="js/canvas.js"></script>
+   
 
     <script>
         $(document).ready(function(){loadLibrary("libraryList");
             initCanvas();
+            initStartEnd();
 
         });
     </script>

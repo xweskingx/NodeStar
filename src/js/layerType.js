@@ -8,29 +8,8 @@ function LayerType(libData){
 
 LayerType.prototype.toFlowchartData = function(){
 
-    var data = new Object();
-    data.operators = new Object();
-    data.operators.operator1 = new Object();
-    data.operators.operator1.top = 0;
-    data.operators.operator1.left = 0;
-    data.operators.operator1.properties = new Object();
-    var props = data.operators.operator1.properties;
-    props.title = this.layer_type;
-    var inputs = new Object();
-    var outputs = new Object();
-    for(var i = 0; i < this.default_in; i++){
-        var label = "input_"+(i+1);
-        inputs[label]={'label':'Input ' + i};
-    }
-    for(var k = 0; k < this.default_out; k++){
-        var label = "output_"+(k+1);
-        outputs[label]={'label':'Output ' + k};
-    }
-    props.inputs = inputs;
-    props.outputs = outputs;
-    this.layerData = data;
-    return data;
-
+    return makeData(this.layer_type, this.default_in, this.default_out, 0,0);
+    
 }
 
 LayerType.prototype.appendToLibary = function(lib, id, idn){
