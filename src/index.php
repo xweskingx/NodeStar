@@ -70,6 +70,7 @@
     <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
     
+    <script src="js/layerList.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/middleware.js"></script>

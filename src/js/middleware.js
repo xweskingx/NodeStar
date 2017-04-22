@@ -53,7 +53,18 @@ function generateMiddlewareJSON(){
         ]
     };  //This was left for a template 
     
-    var data = $('#canvasHolder').flowchart('getData');
+   var data = $('#canvasHolder').flowchart('getData');
+    var network = theLayerList.JSONorDIE();
+    if(network == "startEndFail"){
+        makeInfoNoty("Please ensure start and end are linked to your network");
+        return null;
+    }else if(network == "connectFail"){
+        makeInfoNoty("No path found from start to end - check for layer breakage");
+        return null;
+    }
+   var layer_json = {};
+   layer_json.network = network;
+  /* 
     var operators = data['operators'];
     var ids = Object.keys(operators);
     var network = [];
@@ -64,12 +75,17 @@ function generateMiddlewareJSON(){
         
     }
     var layer_json = {};
-    layer_json.network = network;
+    layer_json.network = network;*/
+    console.log(layer_json);
     return layer_json;
 }
 function get_schema() {
    var layer_json = generateMiddlewareJSON();
-
+   
+   if(layer_json == null){
+       return null;
+   }
+else{
   var schemaName = getSchemaName();
   if(schemaName != null){
     $.ajax({
@@ -87,16 +103,12 @@ function get_schema() {
   }
     return false;
 }
+}
 
 function getSchemaName(){
     var name = $('#schemaNameBox').val().trim();
     if(name == ""){
-        new Noty({
-         text: 'Please name your schema before downloading',
-         layout: 'topCenter',
-         type: 'information',
-         theme:'mint'
-        }).show();
+        makeInfoNoty('Please name your schema before downloading');
         return null;   
     }
     return name + ".py";
@@ -135,3 +147,12 @@ $('#adButton').click(function(){
 $('#logButton').click(function(){
     console.log("Wes, logout here");
 });
+
+function makeInfoNoty(msg){
+    new Noty({
+         text: msg,
+         layout: 'topCenter',
+         type: 'information',
+         theme:'mint'
+        }).show();
+}

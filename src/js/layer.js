@@ -7,5 +7,11 @@
 function Layer(name, id){
     this.id = id;
     this.name = name;
+    this.input_layer = null;
+    this.output_layer = null;
+    this.inputs = [];
+    this.outputs = [];
+    this.in_data = 'string';
+    this.out_data = 'string';
     
 }
