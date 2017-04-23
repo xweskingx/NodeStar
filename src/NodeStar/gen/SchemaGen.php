@@ -22,7 +22,7 @@ class SchemaGen {
             $all .= $this->conn->get_node($layer);
         }
 
-        return json_encode("{schema : {$all} }");
+        return $all;
     }
 
     public function get_nodes() {
