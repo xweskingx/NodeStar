@@ -1,4 +1,4 @@
-<?php include 'login.php';?>
+<?php // include 'login.php';?>
 
 <!DOCTYPE html>
 <html>
@@ -69,13 +69,13 @@
     <script src="jquery_flowchart/jquery.flowchart.js"></script>
     <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    
+
     <script src="js/layerList.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/middleware.js"></script>
     <script src="js/canvas.js"></script>
-   
+
 
     <script>
         $(document).ready(function(){loadLibrary("libraryList");

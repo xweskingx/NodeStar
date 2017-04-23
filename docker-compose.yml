@@ -7,9 +7,8 @@ services:
       - auth
     restart: always
     image: nginx:latest
-    build:
-      dockerfile: web/Dockerfile
-      context: .
+    volumes:
+        - ./src:/src
     ports:
       - "80:80"
     networks:
@@ -25,8 +24,12 @@ services:
       - auth
     restart: always
     build:
-      dockerfile: php/Dockerfile
+      dockerfile: env/php/Dockerfile
       context: .
+    volumes:
+        - ./src:/src
+        - ./templates:/templates
+    command: /bin/sh -c 'cd /src && composer install --no-interaction && php-fpm'
     networks:
       server-bridge:
         aliases:
@@ -51,7 +54,7 @@ services:
   auth:
     image: jboss/keycloak-mysql
     build:
-      dockerfile: keycloak/Dockerfile
+      dockerfile: env/keycloak/Dockerfile
       context: .
     links:
       - db:mysql

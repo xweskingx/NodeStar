@@ -1,7 +1,8 @@
 <?php
 namespace NodeStar\DB;
+require_once('IConnector.php');
 
-class Connector {
+class Connector implements \NodeStar\connector\SchemaConnector {
 
     private $conn     = null;
     private $db_addr  = '';
@@ -83,11 +84,15 @@ class Connector {
         return $r_arr;
     }
 
-    public function get_node($node_name) {
+    public function get_node(String $node_name) {
         $q_res = $this->con_do("select * from {$this->db_name}".
             " where name='{$node_name}'")->fetch_assoc();
 
         $f_path = $q_res["file_path"];
+
+        if(empty($f_path)) {
+            return '';
+        }
 
         $file = fopen($f_path, "r");
 

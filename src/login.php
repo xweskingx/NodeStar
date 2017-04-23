@@ -11,7 +11,7 @@ $provider = new Stevenmaguire\OAuth2\Client\Provider\Keycloak([
     'realm'                 => 'NodeStar',
     'clientId'              => 'NodeStar',
     'clientSecret'          => '14df1a2c-ba38-4201-862b-44c3215feff3',
-    'redirectUri'           => 'http://' . $_SERVER[HTTP_HOST],
+    'redirectUri'           => 'http://localhost:80/',
 ]);
 
 if (!isset($_GET['code'])) {
@@ -39,7 +39,7 @@ if (!isset($_GET['code'])) {
             'code' => $_GET['code']
         ]);
     } catch (Exception $e) {
-      reloadPage();
+         exit('Failed to get access token: '.$e->getMessage());
     }
 
     // Optional: Now you have a token you can look up a users profile data
@@ -48,6 +48,7 @@ if (!isset($_GET['code'])) {
         $user = $provider->getResourceOwner($token);
     } catch (Exception $e) {
       reloadPage();
+       exit('Failed to get resource owner: '.$e->getMessage());
     }
 }
 ?>
