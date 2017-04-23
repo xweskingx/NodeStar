@@ -22,14 +22,8 @@ function Layer(name, id, inpd, outd, in_data, out_data){
 }
 
 Layer.prototype.toSchemaData = function(){
-    var data = new layer();
+    var data = {};
     data[this.name]={"input_dims": this.input_dimensions, "output_dims":this.output_dimensions};
     return data;
 }
 
-/**
- * Dummy object for schema generation
- **/
-function layer(){
-    
-}
