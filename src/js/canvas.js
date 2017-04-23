@@ -15,6 +15,8 @@ function initCanvas(){
         return true;
       },
       onLinkDelete: function(linkId, forced) {
+        var linkData = $('#canvasHolder').flowchart('getData')['links'][linkId];
+        theLayerList.disconnect(linkData['fromOperator'], linkData['toOperator']);
         return true;
       }
     });
@@ -31,8 +33,8 @@ function initStartEnd(){
      $('#canvasHolder').flowchart('createOperator',"startOP", makeData("start", 0, 1, 0,100)["operators"]["operator1"]);
      $('#canvasHolder').flowchart('createOperator',"endOP", makeData("end", 1, 0, 200, 100)["operators"]["operator1"]);
      
-     var start = new Layer("start", "startOP");
-     var end = new Layer("end", "endOP");
+     var start = new Layer("start", "startOP", 0, 1, null, null);
+     var end = new Layer("end", "endOP", 1, 0, null, null);
      theLayerList = new LayerList(start,end);
     
   
@@ -43,10 +45,10 @@ function initStartEnd(){
 //TO-DO, Dry this maybe since the only difference is the in loop operation?
 function fetchProperLayer(selectedID){
     if(selectedID == "startOP"){
-        return null; //TODO return a start item
+        return theLayerList.start; //TODO return a start item
     }
     else if(selectedID == "endOP"){
-        return null; //TODO return an end item
+        return theLayerList.end; //TODO return an end item
     }
     for(var i = 0; i < currentLayers.length; i++){
         if(currentLayers[i].id == selectedID){
@@ -66,7 +68,7 @@ function removeFromLayers(selectedID){
 function deleteLink(){
     var selectedID = $('#canvasHolder').flowchart('getSelectedOperatorId');
     if(selectedID != "startOP" && selectedID != "endOP"){
-     removeFromLayers(selectedID);
+   
      $('#canvasHolder').flowchart('deleteSelected');
     }
 }

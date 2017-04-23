@@ -21,39 +21,67 @@ LayerList.prototype.matchLayerByID = function(id){
 
 LayerList.prototype.addConnection = function(id, nextLayer){
     var layer = fetchProperLayer(id);
-    if(layer == null){
-        if(id == "startOP"){
-            layer = this.start;
-        }else if(id == "endOP"){
-            layer = this.end;
-        }
-    }
     if(layer != null){
         if(nextLayer == "endOP"){
-            layer.output_layer = this.end;
-            this.end.input_layer = layer;
+            if(layer.output_layer == null){
+                layer.output_layer = this.end;
+                this.end.input_layer = layer;
+            }
+            this.end.input_layer.input_count++;
+            layer.output_count++;
         }else{
             var fetched = fetchProperLayer(nextLayer);
-            layer.output_layer = fetched;
-            fetched.input_layer = layer;
-            this.count++;
+            if(layer.output_layer == null){
+                layer.output_layer = fetched;
+                fetched.input_layer = layer;
+                 this.count++;
+            }
+            fetched.input_count++;
+            layer.output_count++;
+           
         }
     }
 }
 
+LayerList.prototype.disconnect = function(from, to){
+    fl = fetchProperLayer(from);
+    tl = fetchProperLayer(to);
+    
+    if(from == 'startOP'){
+        fl = this.start;
+    }
+    if(to == 'endOP'){
+        tl = this.end;
+    }
+    if(fl == null || tl == null){
+        return;
+    }
+    if(fl.output_count == 1){
+        var temp = fl.output_layer;
+        fl.output_layer = null;
+        tl.input_layer = null;
+    }
+    if(fl.output_count != 0){
+        fl.output_count--;
+        tl.input_layer--;
+    }
+}
+
 LayerList.prototype.purgeLayer = function(id){
-    var layer = this.matchLayerByID(id);
+    var layer = fetchProperLayer(id);
     var pre = layer.input_layer;
     var post = layer.output_layer;
     if(pre != null){
         pre.output_layer = null;
+        pre.output_count = 0;
         pre.outputs = [];
     }
     if(post != null){
         post.input_layer = null;
+        post.input_count = 0;
         post.inputs = [];
     }
-    
+    removeFromLayers(id);
     this.count--;
 }
 
@@ -65,7 +93,8 @@ LayerList.prototype.JSONorDIE = function(){
     }
     else{
         while(true){
-        network.push(current.name);
+            var schemadata = current.toSchemaData();
+        network.push(schemadata);
         if(current.output_layer == null){
              if(current == this.end){ return network;}
              return "connectFail";

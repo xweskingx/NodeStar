@@ -1,32 +1,32 @@
 {
   "layer1": {
     "layer_type": "output",
-    "default_in": "4",
-    "default_out": "1",
+    "default_in": 4,
+    "default_out": 1,
     "data_type": "Float32"
   },
   "layer2": {
     "layer_type": "softmax",
-    "default_in": "4",
-    "default_out": "4",
+    "default_in": 4,
+    "default_out": 4,
     "data_type": "Float32"
   },
   "layer3": {
     "layer_type": "mnist",
-    "default_in": "4",
-    "default_out": "4",
+    "default_in": 4,
+    "default_out": 4,
     "data_type": "Float32"
   },
   "layer4": {
     "layer_type": "dense",
-    "default_in": "4",
-    "default_out": "4",
+    "default_in": 4,
+    "default_out": 4,
     "data_type": "Float32"
   },
   "layer5": {
     "layer_type": "input",
-    "default_in": "1",
-    "default_out": "4",
+    "default_in": 1,
+    "default_out": 4,
     "data_type": "Float32"
   }
 }

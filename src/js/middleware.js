@@ -31,7 +31,7 @@ function initAdditions(){
         button.onclick = function(){
             var operatorID = layer.layer_type + "" + getIDC();
             var data = layer.toFlowchartData();
-            currentLayers.push(new Layer(layer.layer_type, operatorID));
+            currentLayers.push(new Layer(layer.layer_type, operatorID, layer.default_in, layer.default_out, layer.data_type, layer.data_type));
             $('#canvasHolder').flowchart('createOperator',operatorID, data["operators"]["operator1"]);
         };
 
