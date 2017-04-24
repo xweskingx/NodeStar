@@ -86,7 +86,7 @@ function get_schema() {
        return null;
    }
 else{
-  var schemaName = getSchemaName();
+  var schemaName = getSchemaName(".py");
   if(schemaName != null){
     $.ajax({
         type: 'post',
@@ -105,13 +105,13 @@ else{
 }
 }
 
-function getSchemaName(){
+function getSchemaName(extension){
     var name = $('#schemaNameBox').val().trim();
     if(name == ""){
         makeInfoNoty('Please name your schema before downloading');
         return null;   
     }
-    return name + ".py";
+    return name + extension;
     
 }
 
@@ -155,4 +155,75 @@ function makeInfoNoty(msg){
          type: 'information',
          theme:'mint'
         }).show();
+}
+
+function saveNSJSTo(destination){
+    
+         
+        var nsjs = generateNodeStarJSON();
+        var name = nsjs['name'];
+        if(name != null){
+            name += ".json";
+            if(destination == 'file'){
+                console.log(nsjs);
+                var blob = new Blob([CircularJSON.stringify(nsjs)], {type: "text/plain;charset=utf-8"});
+                saveAs(blob, name);
+            }
+    
+        }
+}
+
+function loadNSJSFrom(destination){
+    if(destination == 'file'){
+        var file = $('#lsff')['0']['files'][0];
+        var reader = new FileReader();
+        reader.onload = function(e){
+            var result = e.target.result;
+            var nsjs = CircularJSON.parse(result);
+            console.log(nsjs);
+            //Set the values
+            currentLayers = [];
+            reloadLayerData(nsjs['layers']);
+            theLayerList.loadOldData(nsjs['layerList']);
+            $('#canvasHolder').flowchart('setData',nsjs['flowchart']);
+            $('#schemaNameBox').val(nsjs['name']);
+        };
+        reader.readAsText(file);
+        
+    }
+}
+
+function reloadLayerData(oldLayers){
+   
+    for(var i = 0; i < oldLayers.length; i++){
+        var layer = new Layer(oldLayers[i].name, oldLayers[i].id, oldLayers[i].input_dimensions, 
+        oldLayers[i].output_dimensions,oldLayers[i].in_data, oldLayers[i].out_data);
+        layer.input_count = oldLayers[i].input_count;
+        layer.output_count = oldLayers[i].output_count;
+        if(oldLayers[i].input_layer != null){
+            layer.input_layer = oldLayers[i].input_layer.id;
+        }
+        if(oldLayers[i].output_layer != null){
+            layer.output_layer = oldLayers[i].output_layer.id;
+        }
+        currentLayers.push(layer);
+    }
+    console.log(currentLayers);
+    for(var j = 0; j < currentLayers.length; j++){
+        var cur = currentLayers[j];
+        var pre = fetchProperLayer(cur.input_layer);
+        var post = fetchProperLayer(cur.output_layer);
+        cur.input_layer = pre;
+        cur.output_layer = post;
+    }
+}
+
+
+function generateNodeStarJSON(){
+    var nsjs = {};
+    nsjs["layers"] = currentLayers;
+    nsjs["layerList"] = theLayerList;
+    nsjs["flowchart"] = $('#canvasHolder').flowchart("getData");
+    nsjs["name"] = getSchemaName("");
+    return nsjs;
 }

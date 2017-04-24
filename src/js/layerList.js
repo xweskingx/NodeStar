@@ -25,8 +25,9 @@ LayerList.prototype.addConnection = function(id, nextLayer){
         if(nextLayer == "endOP"){
             if(layer.output_layer == null){
                 layer.output_layer = this.end;
-                this.end.input_layer = layer;
+                
             }
+            this.end.input_layer = layer;
             this.end.input_layer.input_count++;
             layer.output_count++;
         }else{
@@ -103,4 +104,10 @@ LayerList.prototype.JSONorDIE = function(){
         }
     }
     }
+}
+
+LayerList.prototype.loadOldData = function(oldData){
+    this.start = fetchProperLayer(oldData['start'].id);
+    this.end = fetchProperLayer(oldData['end'].id);
+    this.current = oldData['current'];
 }

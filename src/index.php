@@ -28,10 +28,14 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li id="schema-down" role="presentation"><a href="#" onclick="get_schema();">Download Schema</a></li>
                                 <li class="divider" role="presentation"></li>
-                                <li role="presentation"><a href="#">Save Schema</a></li>
-                                <li role="presentation"><a href="#">Load Schema</a></li>
+                                <li role="presentation"><a href="#" id="sstf">Save Schema to File</a></li>
+                                <li role="presentation"><a href="#" onclick="document.getElementById('lsff').click();">Load Schema from File</a></li>
+                                <li class="divider" role="presentation"></li>
+                                <li role="presentation"><a href="#">Save Schema to Database</a></li>
+                                <li role="presentation"><a href="#">Load Schema from Database</a></li>
                             </ul>
                         </li>
+                        <input type="file" style="display:none;" id="lsff" name="file"/>
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Account <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li role="presentation"><a href="#" id="adButton">Account Details</a></li>
@@ -69,6 +73,7 @@
     <script src="js/jquery-ui.min.js"></script>
     <script src="file_saver/FileSaver.min.js"></script>
     <script src="jquery_flowchart/jquery.flowchart.js"></script>
+    <script src="js/circular-json.js"></script>
     <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootbox.min.js"></script>
@@ -76,8 +81,9 @@
     <script src="js/layerList.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
-    <script src="js/middleware.js"></script>
     <script src="js/canvas.js"></script>
+    <script src="js/middleware.js"></script>
+  
    
 
     <script>

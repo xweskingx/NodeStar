@@ -28,6 +28,14 @@ function initCanvas(){
         editLayer();
     });
     
+    $('#sstf').click(function(){
+        saveNSJSTo("file");
+    })
+    
+    $('#lsff').change(function(){
+        loadNSJSFrom("file");
+    })
+    
     
 }
 
