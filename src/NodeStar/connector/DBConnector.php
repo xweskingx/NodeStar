@@ -20,7 +20,7 @@ class Connector implements \NodeStar\connector\SchemaConnector {
         $this->db_name  = $db_name;
         $this->db_table = $db_table;
         $this->conn     = $this->connect($db_addr, $db_user, $db_pass, $db_name);
-        }
+    }
 
     private function connect($db_addr, $db_user, $db_pass, $db_name) {
 
@@ -94,8 +94,7 @@ class Connector implements \NodeStar\connector\SchemaConnector {
             return '';
         }
 
-        $file = fopen($f_path, "r");
-
+        $file     = fopen($f_path, "r");
         $template = fread($file, filesize($f_path));
 
         fclose($file);

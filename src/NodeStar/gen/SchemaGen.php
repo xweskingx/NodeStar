@@ -16,11 +16,17 @@ class SchemaGen {
     }
 
     public function make_network($json) {
-        $all     = '';
+        $all = '';
+
+
+        $log_file = fopen('gen.log', 'w');
 
         foreach($json as $layer) {
             $all .= $this->conn->get_node($layer);
+            fwrite($log_file, "{$layer}");
         }
+
+        fclose($log_file);
 
         return $all;
     }
