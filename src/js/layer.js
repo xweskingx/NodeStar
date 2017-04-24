@@ -36,8 +36,14 @@ Layer.prototype.updateNeighbors = function(){
     var post = this.output_layer;
     var data = $('#canvasHolder').flowchart('getData');
     var links = data['links'];
-    var inLinks = findAttachedLinks(links, pre.id,this.id);
-    var outLinks = findAttachedLinks(links, this.id,post.id);
+    var inLinks = 0;
+    if(pre != null){
+        inLinks = findAttachedLinks(links, pre.id,this.id);
+    }
+    var outLinks = 0;
+    if(post != null){
+         outLinks = findAttachedLinks(links, this.id,post.id);
+    }
     
     if(inLinks == 0){
         pre.output_count = 0;

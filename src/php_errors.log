@@ -97,3 +97,6 @@
 [24-Apr-2017 02:11:12 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ubuntu/workspace/NS4/NodeStar/src/NodeStar/DBConnector.php on line 61
 [24-Apr-2017 02:11:12 UTC] PHP Stack trace:
 [24-Apr-2017 02:11:12 UTC] PHP   1. {main}() /home/ubuntu/workspace/NS4/NodeStar/src/NodeStar/Middleware.php:0
+[24-Apr-2017 14:32:13 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ubuntu/workspace/NS4/NodeStar/src/NodeStar/DBConnector.php on line 61
+[24-Apr-2017 14:32:13 UTC] PHP Stack trace:
+[24-Apr-2017 14:32:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/NS4/NodeStar/src/NodeStar/Middleware.php:0
