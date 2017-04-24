@@ -115,7 +115,7 @@ function getSchemaName(){
     
 }
 
-function makeData(layer_type,ind,outd,left, top){
+function makeData(layer_type,ind,outd,left,top){
      var data = new Object();
     data.operators = new Object();
     data.operators.operator1 = new Object();

@@ -21,6 +21,7 @@ function Layer(name, id, inpd, outd, in_data, out_data){
     
 }
 
+
 Layer.prototype.toSchemaData = function(){
     var data = {};
     data[this.name]={"input_dims": this.input_dimensions, "output_dims":this.output_dimensions,
@@ -29,3 +30,32 @@ Layer.prototype.toSchemaData = function(){
     return data;
 }
 
+
+Layer.prototype.updateNeighbors = function(){
+    var pre = this.input_layer;
+    var post = this.output_layer;
+    var data = $('#canvasHolder').flowchart('getData');
+    var links = data['links'];
+    var inLinks = findAttachedLinks(links, pre.id,this.id);
+    var outLinks = findAttachedLinks(links, this.id,post.id);
+    
+    if(inLinks == 0){
+        pre.output_count = 0;
+        pre.output_layer = null;
+        this.input_count = 0;
+        this.input_layer = null;
+    }else{
+        pre.output_count = inLinks;
+        pre.output_layer = this;
+    }
+    if(outLinks == 0){
+        this.output_count = 0;
+        this.output_layer = null;
+        post.input_count = 0;
+        post.input_layer = null;
+    }else{
+        post.input_count = outLinks;
+        post.input_layer = this;
+    }
+   
+}
