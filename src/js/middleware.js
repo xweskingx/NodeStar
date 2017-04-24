@@ -1,7 +1,12 @@
 var layerTypes = [];
-
+var layerTypeStyles = {};
 
 var idc = 0;
+
+
+function getStyleData(name){
+    return layerTypeStyles[name];
+}
 
 function loadLibrary(libraryID){
     $.getJSON("libjson/library_data.json", function(json) {
@@ -14,6 +19,7 @@ function loadLibrary(libraryID){
         }
 
         initAdditions();
+        stylize();
 
     });
 }
@@ -33,6 +39,8 @@ function initAdditions(){
             var data = layer.toFlowchartData();
             currentLayers.push(new Layer(layer.layer_type, operatorID, layer.default_in, layer.default_out, layer.data_type, layer.data_type));
             $('#canvasHolder').flowchart('createOperator',operatorID, data["operators"]["operator1"]);
+            console.log( $('#canvasHolder').flowchart('getOperatorData',operatorID));
+            
         };
 
     });
@@ -226,4 +234,16 @@ function generateNodeStarJSON(){
     nsjs["flowchart"] = $('#canvasHolder').flowchart("getData");
     nsjs["name"] = getSchemaName("");
     return nsjs;
+}
+
+function getLinkColor(id){
+    id = id+"";
+    var name = id.replace(/[0-9]/g, '');
+    var style = getStyleData(name);
+    if(style != null){
+        return style['link_color'];
+    }
+    else{
+        return 'blue';
+    }
 }

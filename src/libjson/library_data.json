@@ -3,30 +3,65 @@
     "layer_type": "output",
     "default_in": 4,
     "default_out": 1,
-    "data_type": "Float32"
+    "data_type": "Float32",
+    "layer_style":{
+    "top_background": "#5a92ed",
+	  "top_foreground": "black",
+	  "bot_background": "#416baf",
+	  "bot_foreground": "white",
+	  "link_color":"#5a92ed"
+    }
   },
   "layer2": {
     "layer_type": "softmax",
     "default_in": 4,
     "default_out": 4,
-    "data_type": "Float32"
+    "data_type": "Float32",
+    "layer_style":{
+    "top_background": "#e26868",
+	  "top_foreground": "black",
+	  "bot_background": "#ba5151",
+	  "bot_foreground": "white",
+	  "link_color":"#e26868"
+    }
   },
   "layer3": {
     "layer_type": "mnist",
     "default_in": 4,
     "default_out": 4,
-    "data_type": "Float32"
+    "data_type": "Float32",
+    "layer_style":{
+    "top_background": "#56eac7",
+	  "top_foreground": "black",
+	  "bot_background": "#41af95",
+	  "bot_foreground": "white",
+	  "link_color":"#56eac7"
+    }
   },
   "layer4": {
     "layer_type": "dense",
     "default_in": 4,
     "default_out": 4,
-    "data_type": "Float32"
+    "data_type": "Float32",
+    "layer_style":{
+    "top_background": "#eab656",
+	  "top_foreground": "black",
+	  "bot_background": "#998737",
+	  "bot_foreground": "white",
+	  "link_color":"#eab656"
+    }
   },
   "layer5": {
     "layer_type": "input",
     "default_in": 1,
     "default_out": 4,
-    "data_type": "Float32"
+    "data_type": "Float32",
+    "layer_style":{
+    "top_background": "#e05393",
+	  "top_foreground": "black",
+	  "bot_background": "#993764",
+	  "bot_foreground": "white",
+	  "link_color":"#e05393"
+    }
   }
 }
