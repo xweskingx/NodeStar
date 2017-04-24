@@ -56,8 +56,10 @@
         </div>
            <div class="canvasTopBar">
                Schema Name: <input type="text" id="schemaNameBox">
+               <button class="canvasLayerEdit" id ="editButton">Edit Network Layer</button>
                <button class="canvasDel" id="delbutton">Delete Selection</button>
             </div>
+    
           <div class="canvas well" id="canvasHolder">
 
           </div>
@@ -69,7 +71,8 @@
     <script src="jquery_flowchart/jquery.flowchart.js"></script>
     <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/bootbox.min.js"></script>
+    
     <script src="js/layerList.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
