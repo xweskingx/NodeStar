@@ -82,10 +82,13 @@
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/canvas.js"></script>
+<<<<<<< HEAD
+
+=======
     <script src="js/middleware.js"></script>
   
    
-
+>>>>>>> dev
 
     <script>
         $(document).ready(function(){loadLibrary("libraryList");

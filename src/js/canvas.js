@@ -1,5 +1,7 @@
 var currentLayers = [];
 var theLayerList;
+var styleLinks = {};
+var pickedId;
 
 function initCanvas(){
     
@@ -17,8 +19,35 @@ function initCanvas(){
       onLinkDelete: function(linkId, forced) {
         var linkData = $('#canvasHolder').flowchart('getData')['links'][linkId];
         theLayerList.disconnect(linkData['fromOperator'], linkData['toOperator']);
+        styleLinks[linkId] = null;
         return true;
-      }
+      },
+      onAfterChange: function (changeType) {
+          stylize();
+          return true;
+        },
+        onLinkCreate: function (linkId, linkData) {
+             var fromID = linkData['fromOperator'];
+             pickedId = linkId;
+             styleLinks[pickedId] = getLinkColor(fromID);
+             setTimeout(function(){
+                 if(pickedId != null && styleLinks[pickedId] != null ){
+            $('#canvasHolder').flowchart("setLinkMainColor",pickedId, styleLinks[pickedId]);
+            $('#canvasHolder').flowchart("colorizeLink",pickedId, styleLinks[pickedId]);
+            pickedId = null;
+            return true;
+          };
+             },10);
+             return true;
+         },
+         onLinkSelect:function(linkId){
+             pickedId = linkId;
+             return true;
+         },
+         onLinkUnselect: function () {
+            pickedId = null;
+            return true;
+         }
     });
      $('#delbutton').click(function(){
         deleteLink();
@@ -28,6 +57,14 @@ function initCanvas(){
         editLayer();
     });
     
+    $('#sstf').click(function(){
+        saveNSJSTo("file");
+    })
+    
+    $('#lsff').change(function(){
+        loadNSJSFrom("file");
+    })
+   
     
 }
 
@@ -172,4 +209,19 @@ function findAttachedLinks(links, inID, outID){
     return count;
 }
 
+
+function stylize(){
+    $(".flowchart-operator-title").each(function(index){
+        var text = $(this).text();
+        if(text != "end" && text != "start"){
+            var par = $(this).parent();
+            var layerStyleData = getStyleData(text);
+            $(this).css("background-color", layerStyleData.top_background);
+            $(this).css("color",layerStyleData.top_foreground);
+            par.css("background-color",layerStyleData.bot_background);
+            par.css("color",layerStyleData.bot_foreground);
+        }
+    });
+   
+}
    

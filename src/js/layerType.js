@@ -1,9 +1,12 @@
+
+
 function LayerType(libData){
     this.layer_type = libData["layer_type"];
     this.default_in = libData["default_in"];
     this.default_out = libData["default_out"];
     this.data_type = libData["data_type"];
     this.layerData = "";
+    layerTypeStyles[this.layer_type] = libData["layer_style"];
 }
 
 LayerType.prototype.toFlowchartData = function(){
@@ -22,7 +25,6 @@ LayerType.prototype.appendToLibary = function(lib, id, idn){
 
   //This code sets up a default flowchart operator to represent the
   //layer
-  //TO-DO Abstract out flowchart settings maybe?
   $('#'+id).flowchart({
   canUserEditLinks: false,
   canUserMoveOperators: false,

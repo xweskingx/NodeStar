@@ -1,4 +1,4 @@
-<?php // include 'login.php';?>
+<?php include 'login.php';?>
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +85,6 @@
     <script src="js/middleware.js"></script>
   
    
-
 
     <script>
         $(document).ready(function(){loadLibrary("libraryList");
