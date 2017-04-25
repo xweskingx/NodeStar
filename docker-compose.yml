@@ -24,6 +24,9 @@ services:
       - db
       - auth
     restart: always
+    build:
+      dockerfile: php/Dockerfile
+      context: .
     volumes:
       - ./src:/src
       - ./templates:/templates
