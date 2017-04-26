@@ -153,7 +153,7 @@ $('#adButton').click(function(){
 });
 
 $('#logButton').click(function(){
-    console.log("Wes, logout here");
+window.location.href = 'http://' + window.location.hostname + '/logout.php';
 });
 
 function makeInfoNoty(msg){
