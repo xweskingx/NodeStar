@@ -18,6 +18,6 @@ do
     fi
 done
 
-exec /opt/jboss/keycloak/bin/standalone.sh $ARGS
+exec /opt/jboss/keycloak/bin/standalone.sh -b=0.0.0.0 $ARGS
 
 exit $?

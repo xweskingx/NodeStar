@@ -28,6 +28,9 @@ function initCanvas(){
         },
         onLinkCreate: function (linkId, linkData) {
              var fromID = linkData['fromOperator'];
+             var toID = linkData['toOperator'];
+             console.log(fromID + "  " + toID);
+             theLayerList.addConnection(fromID, toID);
              pickedId = linkId;
              styleLinks[pickedId] = getLinkColor(fromID);
              setTimeout(function(){
