@@ -18,7 +18,7 @@ function Layer(name, id, inpd, outd, in_data, out_data){
     this.output_count = 0;
     this.in_data = in_data;
     this.out_data = out_data;
-    
+
 }
 
 
@@ -44,7 +44,7 @@ Layer.prototype.updateNeighbors = function(){
     if(post != null){
          outLinks = findAttachedLinks(links, this.id,post.id);
     }
-    
+
     if(inLinks == 0){
         pre.output_count = 0;
         pre.output_layer = null;
@@ -63,5 +63,5 @@ Layer.prototype.updateNeighbors = function(){
         post.input_count = outLinks;
         post.input_layer = this;
     }
-   
+
 }

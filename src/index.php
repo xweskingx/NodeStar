@@ -31,7 +31,7 @@
                                 <li role="presentation"><a href="#" id="sstf">Save Schema to File</a></li>
                                 <li role="presentation"><a href="#" onclick="document.getElementById('lsff').click();">Load Schema from File</a></li>
                                 <li class="divider" role="presentation"></li>
-                                <li role="presentation"><a href="#">Save Schema to Database</a></li>
+                                <li role="presentation"><a href="#" onclick="save_schema_db()">Save Schema to Database</a></li>
                                 <li role="presentation"><a href="#">Load Schema from Database</a></li>
                             </ul>
                         </li>
@@ -63,7 +63,7 @@
                <button class="canvasLayerEdit" id ="editButton">Edit Network Layer</button>
                <button class="canvasDel" id="delbutton">Delete Selection</button>
             </div>
-    
+
           <div class="canvas well" id="canvasHolder">
 
           </div>
@@ -77,14 +77,14 @@
     <script src="noty/noty.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootbox.min.js"></script>
-    
+
     <script src="js/layerList.js"></script>
     <script src="js/layerType.js"></script>
     <script src="js/layer.js"></script>
     <script src="js/canvas.js"></script>
     <script src="js/middleware.js"></script>
-  
-   
+
+
 
 
     <script>

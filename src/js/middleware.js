@@ -40,7 +40,7 @@ function initAdditions(){
             currentLayers.push(new Layer(layer.layer_type, operatorID, layer.default_in, layer.default_out, layer.data_type, layer.data_type));
             $('#canvasHolder').flowchart('createOperator',operatorID, data["operators"]["operator1"]);
             console.log( $('#canvasHolder').flowchart('getOperatorData',operatorID));
-            
+
         };
 
     });
@@ -59,8 +59,8 @@ function generateMiddlewareJSON(){
             "softmax",
             "output"
         ]
-    };  //This was left for a template 
-    
+    };  //This was left for a template
+
    var data = $('#canvasHolder').flowchart('getData');
     var network = theLayerList.JSONorDIE();
     if(network == "startEndFail"){
@@ -72,7 +72,7 @@ function generateMiddlewareJSON(){
     }
    var layer_json = {};
    layer_json.network = network;
-  /* 
+  /*
     var operators = data['operators'];
     var ids = Object.keys(operators);
     var network = [];
@@ -80,7 +80,7 @@ function generateMiddlewareJSON(){
         var layer = fetchProperLayer(ids[i]);
         if(layer != null)
             network.push(layer.name);
-        
+
     }
     var layer_json = {};
     layer_json.network = network;*/
@@ -89,7 +89,7 @@ function generateMiddlewareJSON(){
 }
 function get_schema() {
    var layer_json = generateMiddlewareJSON();
-   
+
    if(layer_json == null){
        return null;
    }
@@ -113,14 +113,40 @@ else{
 }
 }
 
+function save_schema_db() {
+    var layer_json = generateMiddlewareJSON();
+    console.log(layer_json);
+
+    if(!layer_json) return null;
+
+    var name           = getSchemaName("");
+    layer_json['name'] = name;
+
+    if(name) {
+        $.ajax({
+            type     : 'post',
+            url      : 'NodeStar/SaveSchema.php',
+            data     : layer_json,
+            complete : function(res) {
+                $('#output').html('Schema saved to database!');
+            },
+            error : function() {
+                $('output').html('Error saving schema!');
+            }
+        })
+    }
+
+    return false;
+}
+
 function getSchemaName(extension){
     var name = $('#schemaNameBox').val().trim();
     if(name == ""){
         makeInfoNoty('Please name your schema before downloading');
-        return null;   
+        return null;
     }
     return name + extension;
-    
+
 }
 
 function makeData(layer_type,ind,outd,left,top){
@@ -166,8 +192,8 @@ function makeInfoNoty(msg){
 }
 
 function saveNSJSTo(destination){
-    
-         
+
+
         var nsjs = generateNodeStarJSON();
         var name = nsjs['name'];
         if(name != null){
@@ -177,7 +203,7 @@ function saveNSJSTo(destination){
                 var blob = new Blob([CircularJSON.stringify(nsjs)], {type: "text/plain;charset=utf-8"});
                 saveAs(blob, name);
             }
-    
+
         }
 }
 
@@ -197,14 +223,14 @@ function loadNSJSFrom(destination){
             $('#schemaNameBox').val(nsjs['name']);
         };
         reader.readAsText(file);
-        
+
     }
 }
 
 function reloadLayerData(oldLayers){
-   
+
     for(var i = 0; i < oldLayers.length; i++){
-        var layer = new Layer(oldLayers[i].name, oldLayers[i].id, oldLayers[i].input_dimensions, 
+        var layer = new Layer(oldLayers[i].name, oldLayers[i].id, oldLayers[i].input_dimensions,
         oldLayers[i].output_dimensions,oldLayers[i].in_data, oldLayers[i].out_data);
         layer.input_count = oldLayers[i].input_count;
         layer.output_count = oldLayers[i].output_count;
