@@ -51,7 +51,7 @@ function initAdditions(){
 
 
 function generateMiddlewareJSON(){
-     var oldlayer_json = {
+    var oldlayer_json = {
         network : [
             // The mnist layer isn't an actual layer just loads data
             "mnist",
@@ -61,7 +61,7 @@ function generateMiddlewareJSON(){
         ]
     };  //This was left for a template
 
-   var data = $('#canvasHolder').flowchart('getData');
+    var data = $('#canvasHolder').flowchart('getData');
     var network = theLayerList.JSONorDIE();
     if(network == "startEndFail"){
         makeInfoNoty("Please ensure start and end are linked to your network");
@@ -70,47 +70,47 @@ function generateMiddlewareJSON(){
         makeInfoNoty("No path found from start to end - check for layer breakage");
         return null;
     }
-   var layer_json = {};
-   layer_json.network = network;
-  /*
-    var operators = data['operators'];
-    var ids = Object.keys(operators);
-    var network = [];
-    for(var i = 0; i < ids.length; i++){
-        var layer = fetchProperLayer(ids[i]);
-        if(layer != null)
-            network.push(layer.name);
-
-    }
     var layer_json = {};
-    layer_json.network = network;*/
+    layer_json.network = network;
+    /*
+       var operators = data['operators'];
+       var ids = Object.keys(operators);
+       var network = [];
+       for(var i = 0; i < ids.length; i++){
+       var layer = fetchProperLayer(ids[i]);
+       if(layer != null)
+       network.push(layer.name);
+
+       }
+       var layer_json = {};
+       layer_json.network = network;*/
     console.log(layer_json);
     return layer_json;
 }
 function get_schema() {
-   var layer_json = generateMiddlewareJSON();
+    var layer_json = generateMiddlewareJSON();
 
-   if(layer_json == null){
-       return null;
-   }
-else{
-  var schemaName = getSchemaName(".py");
-  if(schemaName != null){
-    $.ajax({
-        type: 'post',
-        url:'NodeStar/Middleware.php',
-        data: layer_json,
-        complete: function (response) {
-            var blob = new Blob([response.responseText], {type: "text/plain;charset=utf-8"});
-            saveAs(blob, schemaName);
-        },
-        error: function () {
-            $('#output').html('Bummer: there was an error!');
+    if(layer_json == null){
+        return null;
+    }
+    else{
+        var schemaName = getSchemaName(".py");
+        if(schemaName != null){
+            $.ajax({
+                type: 'post',
+                url:'NodeStar/Middleware.php',
+                data: layer_json,
+                complete: function (response) {
+                    var blob = new Blob([response.responseText], {type: "text/plain;charset=utf-8"});
+                    saveAs(blob, schemaName);
+                },
+                error: function () {
+                    $('#output').html('Bummer: there was an error!');
+                }
+            });
         }
-    });
-  }
-    return false;
-}
+        return false;
+    }
 }
 
 function save_schema_db() {
@@ -128,15 +128,34 @@ function save_schema_db() {
             url      : 'NodeStar/SaveSchema.php',
             data     : layer_json,
             complete : function(res) {
-                $('#output').html('Schema saved to database!');
+                makeInfoNoty('Schema saved to database successfully!');
             },
             error : function() {
-                $('output').html('Error saving schema!');
+                makeInfoNoty('Error saving schema!');
             }
         })
     }
 
     return false;
+}
+
+function load_schema_db() {
+    var name = getSchemaName('');
+
+    if(name) {
+        $.ajax({
+            type : 'post',
+            url : 'NodeStar/LoadSchema.php',
+            data : name,
+            complete : function(res) {
+                console.log(res.responseText);
+            },
+            error : function () {
+                makeInfoNoty('Error loading schema!');
+            }
+
+        })
+    }
 }
 
 function getSchemaName(extension){
@@ -150,7 +169,7 @@ function getSchemaName(extension){
 }
 
 function makeData(layer_type,ind,outd,left,top){
-     var data = new Object();
+    var data = new Object();
     data.operators = new Object();
     data.operators.operator1 = new Object();
     data.operators.operator1.top = top;
@@ -179,32 +198,31 @@ $('#adButton').click(function(){
 });
 
 $('#logButton').click(function(){
-window.location.href = 'http://' + window.location.hostname + '/logout.php';
+    window.location.href = 'http://' + window.location.hostname + '/logout.php';
 });
 
 function makeInfoNoty(msg){
     new Noty({
-         text: msg,
-         layout: 'topCenter',
-         type: 'information',
-         theme:'mint'
-        }).show();
+        text: msg,
+        layout: 'topCenter',
+        type: 'information',
+        theme:'mint'
+    }).show();
 }
 
 function saveNSJSTo(destination){
 
-
-        var nsjs = generateNodeStarJSON();
-        var name = nsjs['name'];
-        if(name != null){
-            name += ".json";
-            if(destination == 'file'){
-                console.log(nsjs);
-                var blob = new Blob([CircularJSON.stringify(nsjs)], {type: "text/plain;charset=utf-8"});
-                saveAs(blob, name);
-            }
-
+    var nsjs = generateNodeStarJSON();
+    var name = nsjs['name'];
+    if(name != null){
+        name += ".json";
+        if(destination == 'file'){
+            console.log(nsjs);
+            var blob = new Blob([CircularJSON.stringify(nsjs)], {type: "text/plain;charset=utf-8"});
+            saveAs(blob, name);
         }
+
+    }
 }
 
 function loadNSJSFrom(destination){
@@ -231,7 +249,7 @@ function reloadLayerData(oldLayers){
 
     for(var i = 0; i < oldLayers.length; i++){
         var layer = new Layer(oldLayers[i].name, oldLayers[i].id, oldLayers[i].input_dimensions,
-        oldLayers[i].output_dimensions,oldLayers[i].in_data, oldLayers[i].out_data);
+                oldLayers[i].output_dimensions,oldLayers[i].in_data, oldLayers[i].out_data);
         layer.input_count = oldLayers[i].input_count;
         layer.output_count = oldLayers[i].output_count;
         if(oldLayers[i].input_layer != null){

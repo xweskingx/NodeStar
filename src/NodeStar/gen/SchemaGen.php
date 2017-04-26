@@ -46,23 +46,19 @@ class SchemaGen {
     }
 
     public function save_schema($schema) {
-        $save_file = hash('tiger192,3', schema['name']);
+        $save_file = '/templates/' . hash('tiger192,3', schema['name']);
 
-        $log = fopen("log.log", "w");
 
-        $f = fopen('/templates/'.$save_file, "w");
+        $f = fopen($save_file, "w");
 
         fwrite($f, json_encode($schema['network']));
-        fwrite($log, json_encode($schema));
         fclose($f);
-        fclose($log);
 
         $this->conn->place_node($schema['name'], $save_file);
     }
 
     public function load_schema($name) {
-        return json_encode($this->conn->get_node($name));
+        return $this->conn->get_node(key($name));
     }
 }
-
 ?>

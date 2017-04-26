@@ -32,7 +32,7 @@
                                 <li role="presentation"><a href="#" onclick="document.getElementById('lsff').click();">Load Schema from File</a></li>
                                 <li class="divider" role="presentation"></li>
                                 <li role="presentation"><a href="#" onclick="save_schema_db()">Save Schema to Database</a></li>
-                                <li role="presentation"><a href="#">Load Schema from Database</a></li>
+                                <li role="presentation"><a href="#" onclick="load_schema_db()">Load Schema from Database</a></li>
                             </ul>
                         </li>
                         <input type="file" style="display:none;" id="lsff" name="file"/>
