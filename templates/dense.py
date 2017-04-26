@@ -27,3 +27,12 @@ class Dense(object):
     def error(self):
         miss = tf.not_equal(tf.argmax(self.y, 1), tf.argmax(self.prediction, 1))
         return tf.reduce_mean(tf.cast(miss, self.dtype))
+
+def main():
+    x = tf.placeholder(tf.float32, [None, INPUT_DIMS])
+    y = tf.placeholder(tf.float32, [None, OUTPUT_DIMS])
+
+    net = Dense(x, y, in_dims=INPUT_DIMS, out_dims=OUTPUT_DIMS)
+
+    mnist_out(1000, 100, net)
+

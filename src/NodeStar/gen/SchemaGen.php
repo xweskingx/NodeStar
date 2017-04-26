@@ -18,17 +18,29 @@ class SchemaGen {
     public function make_network($json) {
         $all = '';
 
-
-        $log_file = fopen('gen.log', 'w');
-
-        foreach($json as $layer) {
-            $all .= $this->conn->get_node($layer);
-            fwrite($log_file, "{$layer}");
+        foreach($json as $network) {
+            foreach ($network as $layer => $values) {
+                $l_str = $this->conn->get_node($layer);
+                $all  .= $this->insert_options($l_str, $values);
+            }
         }
 
-        fclose($log_file);
-
         return $all;
+    }
+
+    private function insert_options($string, $opts) {
+        $repl = '';
+
+        $patterns = [
+            '/INPUT_DIMS/',
+            '/OUTPUT_DIMS/',
+            '/INPUT_TYPE/',
+            '/OUTPUT_TYPE/'
+        ];
+
+        return preg_replace($patterns, $opts, $string);
+
+
     }
 
     public function get_nodes() {
