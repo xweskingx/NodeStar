@@ -7,9 +7,9 @@ services:
       - auth
     restart: always
     image: nginx:latest
-    build:
-      dockerfile: web/Dockerfile
-      context: .
+    volumes:
+      - ./src:/src
+      - ./utils/site.conf:/etc/nginx.conf.d/default.conf
     ports:
       - "80:80"
     networks:
@@ -27,6 +27,9 @@ services:
     build:
       dockerfile: php/Dockerfile
       context: .
+    volumes:
+      - ./src:/src
+      - ./templates:/templates
     networks:
       server-bridge:
         aliases:
